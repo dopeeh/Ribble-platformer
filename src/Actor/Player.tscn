@@ -1,20 +1,26 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://src/Actor/Player.gd" type="Script" id=1]
-[ext_resource path="res://assets/Ribble.png" type="Texture" id=2]
-[ext_resource path="res://assets/ribble_walk_0.png" type="Texture" id=3]
-[ext_resource path="res://assets/ribble_walk_1.png" type="Texture" id=4]
-[ext_resource path="res://assets/ribble_walk_2.png" type="Texture" id=5]
-[ext_resource path="res://assets/ribble_walk_3.png" type="Texture" id=6]
+[ext_resource path="res://assets/ribble_walk_0.png" type="Texture" id=2]
+[ext_resource path="res://assets/ribble_walk_1.png" type="Texture" id=3]
+[ext_resource path="res://assets/ribble_walk_2.png" type="Texture" id=4]
+[ext_resource path="res://assets/ribble_walk_3.png" type="Texture" id=5]
+[ext_resource path="res://assets/Ribble.png" type="Texture" id=6]
 [ext_resource path="res://assets/ribble_jump_0.png" type="Texture" id=7]
 [ext_resource path="res://assets/ribble_jump_1.png" type="Texture" id=8]
+[ext_resource path="res://assets/arrow.png" type="Texture" id=9]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
-"frames": [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 6 ) ],
+"frames": [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 2 ), ExtResource( 3 ), ExtResource( 5 ) ],
 "loop": true,
 "name": "Running",
 "speed": 8.0
+}, {
+"frames": [ ExtResource( 6 ) ],
+"loop": true,
+"name": "Idle",
+"speed": 5.0
 }, {
 "frames": [ ExtResource( 7 ) ],
 "loop": true,
@@ -25,11 +31,6 @@ animations = [ {
 "loop": true,
 "name": "Jump_down",
 "speed": 5.0
-}, {
-"frames": [ ExtResource( 2 ) ],
-"loop": true,
-"name": "Idle",
-"speed": 5.0
 } ]
 
 [sub_resource type="RectangleShape2D" id=2]
@@ -39,6 +40,8 @@ extents = Vector2( 32.8442, 60.9795 )
 extents = Vector2( 37.863, 63.0141 )
 
 [node name="Player" type="KinematicBody2D"]
+position = Vector2( 0, 63.3954 )
+rotation = 0.000328918
 collision_mask = 8
 script = ExtResource( 1 )
 
@@ -74,5 +77,15 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyDetector"]
 position = Vector2( 0, -64.8382 )
 shape = SubResource( 3 )
+
+[node name="ArrowOrigin" type="Node2D" parent="."]
+position = Vector2( -0.020976, -63.7727 )
+
+[node name="arrow" type="Sprite" parent="ArrowOrigin"]
+position = Vector2( -0.152011, 0.71349 )
+rotation = 1.57192
+scale = Vector2( 0.525006, 0.525006 )
+texture = ExtResource( 9 )
+offset = Vector2( -0.938507, -131.441 )
 [connection signal="area_entered" from="EnemyDetector" to="." method="_on_EnemyDetector_area_entered"]
 [connection signal="body_entered" from="EnemyDetector" to="." method="_on_EnemyDetector_body_entered"]

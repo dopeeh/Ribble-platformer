@@ -1,0 +1,158 @@
+[gd_scene load_steps=20 format=2]
+
+[ext_resource path="res://src/PhysicsMat/PlayerControlled.tres" type="PhysicsMaterial" id=1]
+[ext_resource path="res://src/Actor/PlayerRigid.gd" type="Script" id=2]
+[ext_resource path="res://assets/Ribble Roll.png" type="Texture" id=3]
+[ext_resource path="res://assets/ribble_walk_0.png" type="Texture" id=4]
+[ext_resource path="res://assets/ribble_walk_1.png" type="Texture" id=5]
+[ext_resource path="res://assets/ribble_walk_2.png" type="Texture" id=6]
+[ext_resource path="res://assets/ribble_walk_3.png" type="Texture" id=7]
+[ext_resource path="res://assets/Ribble.png" type="Texture" id=8]
+[ext_resource path="res://assets/ribble_jump_0.png" type="Texture" id=9]
+[ext_resource path="res://assets/ribble_jump_1.png" type="Texture" id=10]
+[ext_resource path="res://assets/arrow.png" type="Texture" id=11]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 3 ) ],
+"loop": true,
+"name": "Rolling",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 7 ) ],
+"loop": true,
+"name": "Running",
+"speed": 8.0
+}, {
+"frames": [ ExtResource( 8 ) ],
+"loop": true,
+"name": "Idle",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 9 ) ],
+"loop": true,
+"name": "Jump_up",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 10 ) ],
+"loop": true,
+"name": "Jump_down",
+"speed": 5.0
+} ]
+
+[sub_resource type="RayShape2D" id=11]
+length = 50.2558
+
+[sub_resource type="CapsuleShape2D" id=12]
+radius = 31.0482
+height = 38.7188
+
+[sub_resource type="CircleShape2D" id=10]
+radius = 37.645
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 37.863, 63.0141 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 11.9455, 4.41642 )
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 10.2973, 58.2304 )
+
+[sub_resource type="RectangleShape2D" id=7]
+extents = Vector2( 10.6943, 58.0129 )
+
+[node name="Player" type="RigidBody2D"]
+position = Vector2( 0, 63.3954 )
+rotation = 0.000328918
+collision_mask = 8
+mode = 2
+physics_material_override = ExtResource( 1 )
+contact_monitor = true
+script = ExtResource( 2 )
+
+[node name="player" type="AnimatedSprite" parent="."]
+position = Vector2( -2.26474, -66.6479 )
+scale = Vector2( 6.68, 6.68 )
+frames = SubResource( 1 )
+animation = "Idle"
+playing = true
+
+[node name="RayCollision" type="CollisionShape2D" parent="."]
+position = Vector2( 1.03631, -54.022 )
+shape = SubResource( 11 )
+
+[node name="UpperbodyCollision" type="CollisionShape2D" parent="."]
+position = Vector2( 1.02937, -75.1036 )
+shape = SubResource( 12 )
+
+[node name="BallCollision" type="CollisionShape2D" parent="."]
+position = Vector2( 1.03093, -70.3603 )
+shape = SubResource( 10 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 0, -244 )
+current = true
+limit_left = 0
+limit_top = 0
+limit_smoothed = true
+smoothing_enabled = true
+smoothing_speed = 7.0
+drag_margin_left = 0.0
+drag_margin_right = 0.0
+
+[node name="EnemyDetector" type="Area2D" parent="."]
+editor/display_folded = true
+visible = false
+modulate = Color( 0.458824, 0.74902, 0.494118, 1 )
+monitorable = false
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyDetector"]
+position = Vector2( 0, -64.8382 )
+shape = SubResource( 3 )
+
+[node name="ArrowOrigin" type="Node2D" parent="."]
+position = Vector2( -0.020976, -63.7727 )
+
+[node name="arrow" type="Sprite" parent="ArrowOrigin"]
+position = Vector2( -0.152011, 0.71349 )
+rotation = 1.57192
+scale = Vector2( 0.525006, 0.525006 )
+texture = ExtResource( 11 )
+offset = Vector2( -0.938507, -131.441 )
+
+[node name="GroundDetector" type="Area2D" parent="."]
+collision_mask = 8
+
+[node name="GroundCollision" type="CollisionShape2D" parent="GroundDetector"]
+visible = false
+position = Vector2( -2.99774e-005, -0.0911417 )
+shape = SubResource( 4 )
+
+[node name="WallDetectorLeft" type="Area2D" parent="."]
+editor/display_folded = true
+visible = false
+collision_mask = 8
+
+[node name="WallCollision" type="CollisionShape2D" parent="WallDetectorLeft"]
+position = Vector2( -32.7863, -65.1323 )
+shape = SubResource( 6 )
+
+[node name="WallDetectorRight" type="Area2D" parent="."]
+editor/display_folded = true
+visible = false
+collision_mask = 8
+
+[node name="WallCollision" type="CollisionShape2D" parent="WallDetectorRight"]
+position = Vector2( 36.5225, -64.7579 )
+shape = SubResource( 7 )
+[connection signal="area_entered" from="EnemyDetector" to="." method="_on_EnemyDetector_area_entered"]
+[connection signal="body_entered" from="EnemyDetector" to="." method="_on_EnemyDetector_body_entered"]
+[connection signal="body_entered" from="GroundDetector" to="." method="_on_Area2D_body_entered"]
+[connection signal="body_exited" from="GroundDetector" to="." method="_on_Area2D_body_exited"]
+[connection signal="body_entered" from="WallDetectorLeft" to="." method="_on_WallDetectorLeft_body_entered"]
+[connection signal="body_exited" from="WallDetectorLeft" to="." method="_on_WallDetectorLeft_body_exited"]
+[connection signal="body_entered" from="WallDetectorRight" to="." method="_on_WallDetectorRight_body_entered"]
+[connection signal="body_exited" from="WallDetectorRight" to="." method="_on_WallDetectorRight_body_exited"]

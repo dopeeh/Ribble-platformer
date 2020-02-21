@@ -1,8 +1,12 @@
 extends Actor
 
 export var stomp_impulse = 1000.0
-export var amount_of_jumps_possible = 2
+export var amount_of_jumps_possible = 1
 var jumpcount = amount_of_jumps_possible
+
+func _ready() -> void:
+	#$arrow.hide()
+	pass
 
 func _on_EnemyDetector_area_entered(area: Area2D) -> void:
 	_velocity = calculate_stomp_velocity(_velocity, stomp_impulse)
@@ -12,10 +16,29 @@ func _on_EnemyDetector_body_entered(body: PhysicsBody2D) -> void:
 	pass
 	#queue_free()
 
-
-func _physics_process(delta: float) -> void:	
+func _physics_process(delta: float) -> void:
+	$ArrowOrigin.hide()
+	
 	var is_jump_interrupted = Input.is_action_just_released("jump") and _velocity.y < 0
 	var direction = get_direction()
+	
+	var mouse_angle = null
+	
+	Engine.time_scale = 1
+	
+	if Input.is_action_pressed("mouse_button"):
+		#Slows down time:
+		Engine.time_scale = 0.25
+		
+		#arrow direction
+		$ArrowOrigin.show()
+		var mouse_pos = get_global_mouse_position()
+		mouse_angle = $ArrowOrigin.global_position.angle_to(mouse_pos)
+		$ArrowOrigin.look_at(mouse_pos)
+		
+	if Input.is_action_just_released("mouse_button") and mouse_angle != null:
+		direction = Vector2(cos(mouse_angle), sin(mouse_angle))
+	
 	_velocity = calculate_move_velocity(_velocity, speed, direction, is_jump_interrupted)
 	_velocity = move_and_slide(_velocity, FLOOR_NORMAL)
 	
@@ -47,9 +70,9 @@ func get_direction() -> Vector2:
 		jumpcount -= 1
 		if is_on_floor():
 			y = -1.0
-		elif is_on_wall():
-			y = -1.0
-			x *= -3.0
+		#elif is_on_wall():
+		#	y = -1.0
+		#	x *= -3.0
 		else:
 			y = 1.0
 	
