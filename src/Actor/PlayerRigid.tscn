@@ -1,66 +1,79 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://src/PhysicsMat/PlayerControlled.tres" type="PhysicsMaterial" id=1]
 [ext_resource path="res://src/Actor/PlayerRigid.gd" type="Script" id=2]
-[ext_resource path="res://assets/Ribble Roll.png" type="Texture" id=3]
-[ext_resource path="res://assets/ribble_walk_0.png" type="Texture" id=4]
-[ext_resource path="res://assets/ribble_walk_1.png" type="Texture" id=5]
-[ext_resource path="res://assets/ribble_walk_2.png" type="Texture" id=6]
-[ext_resource path="res://assets/ribble_walk_3.png" type="Texture" id=7]
-[ext_resource path="res://assets/Ribble.png" type="Texture" id=8]
-[ext_resource path="res://assets/ribble_jump_0.png" type="Texture" id=9]
-[ext_resource path="res://assets/ribble_jump_1.png" type="Texture" id=10]
-[ext_resource path="res://assets/arrow.png" type="Texture" id=11]
+[ext_resource path="res://assets/ribble_jump_1.png" type="Texture" id=3]
+[ext_resource path="res://assets/Ribble Roll.png" type="Texture" id=4]
+[ext_resource path="res://assets/Ribble.png" type="Texture" id=5]
+[ext_resource path="res://assets/ribble_die_0.png" type="Texture" id=6]
+[ext_resource path="res://assets/ribble_die_1.png" type="Texture" id=7]
+[ext_resource path="res://assets/ribble_die_2.png" type="Texture" id=8]
+[ext_resource path="res://assets/ribble_die_3.png" type="Texture" id=9]
+[ext_resource path="res://assets/ribble_die_4.png" type="Texture" id=10]
+[ext_resource path="res://assets/ribble_walk_0.png" type="Texture" id=11]
+[ext_resource path="res://assets/ribble_walk_1.png" type="Texture" id=12]
+[ext_resource path="res://assets/ribble_walk_2.png" type="Texture" id=13]
+[ext_resource path="res://assets/ribble_walk_3.png" type="Texture" id=14]
+[ext_resource path="res://assets/ribble_jump_0.png" type="Texture" id=15]
+[ext_resource path="res://assets/arrow.png" type="Texture" id=16]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
 "frames": [ ExtResource( 3 ) ],
 "loop": true,
+"name": "Jump_down",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 4 ) ],
+"loop": true,
 "name": "Rolling",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 7 ) ],
-"loop": true,
-"name": "Running",
-"speed": 8.0
-}, {
-"frames": [ ExtResource( 8 ) ],
+"frames": [ ExtResource( 5 ) ],
 "loop": true,
 "name": "Idle",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 9 ) ],
+"frames": [ ExtResource( 6 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ) ],
+"loop": false,
+"name": "Die",
+"speed": 8.0
+}, {
+"frames": [ ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 14 ) ],
+"loop": true,
+"name": "Running",
+"speed": 8.0
+}, {
+"frames": [ ExtResource( 15 ) ],
 "loop": true,
 "name": "Jump_up",
 "speed": 5.0
-}, {
-"frames": [ ExtResource( 10 ) ],
-"loop": true,
-"name": "Jump_down",
-"speed": 5.0
 } ]
 
-[sub_resource type="RayShape2D" id=11]
+[sub_resource type="RayShape2D" id=2]
 length = 50.2558
 
-[sub_resource type="CapsuleShape2D" id=12]
+[sub_resource type="CapsuleShape2D" id=3]
 radius = 31.0482
 height = 38.7188
 
-[sub_resource type="CircleShape2D" id=10]
+[sub_resource type="CircleShape2D" id=4]
 radius = 37.645
 
-[sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 37.863, 63.0141 )
-
-[sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 11.9455, 4.41642 )
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 33.1413, 63.3064 )
 
 [sub_resource type="RectangleShape2D" id=6]
-extents = Vector2( 10.2973, 58.2304 )
+extents = Vector2( 11.9455, 4.41642 )
 
 [sub_resource type="RectangleShape2D" id=7]
+extents = Vector2( 10.2973, 58.2304 )
+
+[sub_resource type="RectangleShape2D" id=8]
 extents = Vector2( 10.6943, 58.0129 )
+
+[sub_resource type="CircleShape2D" id=9]
+radius = 45.0211
 
 [node name="Player" type="RigidBody2D"]
 position = Vector2( 0, 63.3954 )
@@ -72,64 +85,68 @@ contact_monitor = true
 script = ExtResource( 2 )
 
 [node name="player" type="AnimatedSprite" parent="."]
-position = Vector2( -2.26474, -66.6479 )
+position = Vector2( -2.769, 2.65817 )
 scale = Vector2( 6.68, 6.68 )
 frames = SubResource( 1 )
 animation = "Idle"
 playing = true
 
 [node name="RayCollision" type="CollisionShape2D" parent="."]
-position = Vector2( 1.03631, -54.022 )
-shape = SubResource( 11 )
+position = Vector2( 0.532047, 15.2841 )
+shape = SubResource( 2 )
 
 [node name="UpperbodyCollision" type="CollisionShape2D" parent="."]
-position = Vector2( 1.02937, -75.1036 )
-shape = SubResource( 12 )
+position = Vector2( 0.525108, -5.79752 )
+shape = SubResource( 3 )
 
 [node name="BallCollision" type="CollisionShape2D" parent="."]
-position = Vector2( 1.03093, -70.3603 )
-shape = SubResource( 10 )
+position = Vector2( 0.526669, -1.05423 )
+shape = SubResource( 4 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2( 0, -244 )
+position = Vector2( -0.504, 13.496 )
+offset = Vector2( 0, -50 )
 current = true
 limit_left = 0
-limit_top = 0
 limit_smoothed = true
 smoothing_enabled = true
 smoothing_speed = 7.0
+offset_v = 1.0
 drag_margin_left = 0.0
 drag_margin_right = 0.0
 
 [node name="EnemyDetector" type="Area2D" parent="."]
 editor/display_folded = true
-visible = false
 modulate = Color( 0.458824, 0.74902, 0.494118, 1 )
+position = Vector2( -0.504261, 69.3061 )
 monitorable = false
 collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyDetector"]
 position = Vector2( 0, -64.8382 )
-shape = SubResource( 3 )
+shape = SubResource( 5 )
 
 [node name="ArrowOrigin" type="Node2D" parent="."]
-position = Vector2( -0.020976, -63.7727 )
+editor/display_folded = true
+position = Vector2( -0.525238, 5.53337 )
 
 [node name="arrow" type="Sprite" parent="ArrowOrigin"]
 position = Vector2( -0.152011, 0.71349 )
 rotation = 1.57192
 scale = Vector2( 0.525006, 0.525006 )
-texture = ExtResource( 11 )
+texture = ExtResource( 16 )
 offset = Vector2( -0.938507, -131.441 )
 
 [node name="GroundDetector" type="Area2D" parent="."]
+editor/display_folded = true
+position = Vector2( -0.504261, 69.3061 )
 collision_mask = 8
 
 [node name="GroundCollision" type="CollisionShape2D" parent="GroundDetector"]
 visible = false
 position = Vector2( -2.99774e-005, -0.0911417 )
-shape = SubResource( 4 )
+shape = SubResource( 6 )
 
 [node name="WallDetectorLeft" type="Area2D" parent="."]
 editor/display_folded = true
@@ -138,7 +155,7 @@ collision_mask = 8
 
 [node name="WallCollision" type="CollisionShape2D" parent="WallDetectorLeft"]
 position = Vector2( -32.7863, -65.1323 )
-shape = SubResource( 6 )
+shape = SubResource( 7 )
 
 [node name="WallDetectorRight" type="Area2D" parent="."]
 editor/display_folded = true
@@ -147,8 +164,18 @@ collision_mask = 8
 
 [node name="WallCollision" type="CollisionShape2D" parent="WallDetectorRight"]
 position = Vector2( 36.5225, -64.7579 )
-shape = SubResource( 7 )
-[connection signal="area_entered" from="EnemyDetector" to="." method="_on_EnemyDetector_area_entered"]
+shape = SubResource( 8 )
+
+[node name="RollingCollisionDetector" type="Area2D" parent="."]
+editor/display_folded = true
+position = Vector2( -0.504261, 69.3061 )
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RollingCollisionDetector"]
+position = Vector2( 0.503911, -70.3602 )
+shape = SubResource( 9 )
+[connection signal="animation_finished" from="player" to="." method="_on_player_animation_finished"]
 [connection signal="body_entered" from="EnemyDetector" to="." method="_on_EnemyDetector_body_entered"]
 [connection signal="body_entered" from="GroundDetector" to="." method="_on_Area2D_body_entered"]
 [connection signal="body_exited" from="GroundDetector" to="." method="_on_Area2D_body_exited"]
@@ -156,3 +183,4 @@ shape = SubResource( 7 )
 [connection signal="body_exited" from="WallDetectorLeft" to="." method="_on_WallDetectorLeft_body_exited"]
 [connection signal="body_entered" from="WallDetectorRight" to="." method="_on_WallDetectorRight_body_entered"]
 [connection signal="body_exited" from="WallDetectorRight" to="." method="_on_WallDetectorRight_body_exited"]
+[connection signal="body_entered" from="RollingCollisionDetector" to="." method="_on_RollingCollisionDetector_body_entered"]
