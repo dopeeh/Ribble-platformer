@@ -2,52 +2,52 @@
 
 [ext_resource path="res://src/PhysicsMat/PlayerControlled.tres" type="PhysicsMaterial" id=1]
 [ext_resource path="res://src/Actor/PlayerRigid.gd" type="Script" id=2]
-[ext_resource path="res://assets/ribble_jump_1.png" type="Texture" id=3]
-[ext_resource path="res://assets/Ribble Roll.png" type="Texture" id=4]
-[ext_resource path="res://assets/Ribble.png" type="Texture" id=5]
-[ext_resource path="res://assets/ribble_die_0.png" type="Texture" id=6]
-[ext_resource path="res://assets/ribble_die_1.png" type="Texture" id=7]
-[ext_resource path="res://assets/ribble_die_2.png" type="Texture" id=8]
-[ext_resource path="res://assets/ribble_die_3.png" type="Texture" id=9]
-[ext_resource path="res://assets/ribble_die_4.png" type="Texture" id=10]
-[ext_resource path="res://assets/ribble_walk_0.png" type="Texture" id=11]
-[ext_resource path="res://assets/ribble_walk_1.png" type="Texture" id=12]
-[ext_resource path="res://assets/ribble_walk_2.png" type="Texture" id=13]
-[ext_resource path="res://assets/ribble_walk_3.png" type="Texture" id=14]
-[ext_resource path="res://assets/ribble_jump_0.png" type="Texture" id=15]
+[ext_resource path="res://assets/ribble_walk_0.png" type="Texture" id=3]
+[ext_resource path="res://assets/ribble_walk_1.png" type="Texture" id=4]
+[ext_resource path="res://assets/ribble_walk_2.png" type="Texture" id=5]
+[ext_resource path="res://assets/ribble_walk_3.png" type="Texture" id=6]
+[ext_resource path="res://assets/Ribble.png" type="Texture" id=7]
+[ext_resource path="res://assets/ribble_jump_0.png" type="Texture" id=8]
+[ext_resource path="res://assets/ribble_jump_1.png" type="Texture" id=9]
+[ext_resource path="res://assets/Ribble Roll.png" type="Texture" id=10]
+[ext_resource path="res://assets/ribble_die_0.png" type="Texture" id=11]
+[ext_resource path="res://assets/ribble_die_1.png" type="Texture" id=12]
+[ext_resource path="res://assets/ribble_die_2.png" type="Texture" id=13]
+[ext_resource path="res://assets/ribble_die_3.png" type="Texture" id=14]
+[ext_resource path="res://assets/ribble_die_4.png" type="Texture" id=15]
 [ext_resource path="res://assets/arrow.png" type="Texture" id=16]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
-"frames": [ ExtResource( 3 ) ],
-"loop": true,
-"name": "Jump_down",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 4 ) ],
-"loop": true,
-"name": "Rolling",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 5 ) ],
-"loop": true,
-"name": "Idle",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 6 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ) ],
-"loop": false,
-"name": "Die",
-"speed": 8.0
-}, {
-"frames": [ ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 14 ) ],
+"frames": [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 6 ) ],
 "loop": true,
 "name": "Running",
 "speed": 8.0
 }, {
-"frames": [ ExtResource( 15 ) ],
+"frames": [ ExtResource( 7 ) ],
+"loop": true,
+"name": "Idle",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 8 ) ],
 "loop": true,
 "name": "Jump_up",
 "speed": 5.0
+}, {
+"frames": [ ExtResource( 9 ) ],
+"loop": true,
+"name": "Jump_down",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 10 ) ],
+"loop": false,
+"name": "Rolling",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 11 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 15 ) ],
+"loop": false,
+"name": "Die",
+"speed": 8.0
 } ]
 
 [sub_resource type="RayShape2D" id=2]
@@ -85,7 +85,6 @@ contact_monitor = true
 script = ExtResource( 2 )
 
 [node name="player" type="AnimatedSprite" parent="."]
-position = Vector2( -2.769, 2.65817 )
 scale = Vector2( 6.68, 6.68 )
 frames = SubResource( 1 )
 animation = "Idle"
@@ -116,7 +115,6 @@ drag_margin_left = 0.0
 drag_margin_right = 0.0
 
 [node name="EnemyDetector" type="Area2D" parent="."]
-editor/display_folded = true
 modulate = Color( 0.458824, 0.74902, 0.494118, 1 )
 position = Vector2( -0.504261, 69.3061 )
 monitorable = false

@@ -1,5 +1,7 @@
 extends ActorRigid
 
+
+
 export var acceleration = 10000
 export var top_move_speed = 550
 export var top_rolling_speed = 1500
@@ -79,15 +81,15 @@ func apply_force(state):
 	# Rolling ability, slingshot yourself with the mouse_button
 	if Input.is_action_pressed("left_mouse_button") and not rolling_canceled and not rolling:
 		
-			if Input.is_action_pressed("right_mouse_button"):
-				rolling_canceled = true
-			
-			#Slows down time:
-			Engine.time_scale = 0.25
-			
-			#arrow direction
-			$ArrowOrigin.show()
-			$ArrowOrigin.look_at(mouse_pos)
+		if Input.is_action_pressed("right_mouse_button"):
+			rolling_canceled = true
+		
+		#Slows down time:
+		Engine.time_scale = 0.25
+		
+		#arrow direction
+		$ArrowOrigin.show()
+		$ArrowOrigin.look_at(mouse_pos)
 	if Input.is_action_just_released("left_mouse_button") and not rolling_canceled and not rolling:
 		
 		rolling = true
@@ -97,6 +99,7 @@ func apply_force(state):
 		_velocity += direction
 	
 	if not rolling:
+		$player.rotation = 0
 		mode = RigidBody2D.MODE_CHARACTER
 		get_node("BallCollision").set_deferred("disabled", true)
 		get_node("RollingCollisionDetector").set_deferred("disabled", true)
@@ -154,8 +157,6 @@ func apply_force(state):
 			else:
 				$player.animation = "Jump_down"
 	else:
-		print(linear_velocity.length())
-		print(get_inertia())
 		# Using the roll ability!
 		mode = RigidBody2D.MODE_RIGID
 		get_node("BallCollision").set_deferred("disabled", false)
@@ -164,8 +165,10 @@ func apply_force(state):
 		get_node("RayCollision").set_deferred("disabled", true)
 		get_node("EnemyDetector").set_deferred("disabled", true)
 		$player.animation = "Rolling"
+		$player.rotate(linear_velocity.x * 0.001)
 		set_friction(0.05)
 		set_bounce(0.2)
+		
 		rolling_time += state.step
 		
 		#if stepify(linear_velocity.length(), 0.1) == 0:
@@ -204,7 +207,8 @@ func _on_WallDetectorRight_body_exited(body: PhysicsBody2D) -> void:
 
 
 func _on_EnemyDetector_body_entered(body: PhysicsBody2D) -> void:
-	die()
+	if not rolling:
+		die()
 
 
 func _on_RollingCollisionDetector_body_entered(body: PhysicsBody2D) -> void:
@@ -214,6 +218,7 @@ func die():
 	dead = true
 	sleeping = true
 	mode = RigidBody2D.MODE_STATIC
+	$player.rotation = 0
 	$player.animation = "Die"
 	
 

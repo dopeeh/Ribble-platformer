@@ -46,11 +46,12 @@ collision_mask = 8
 script = ExtResource( 1 )
 
 [node name="player" type="AnimatedSprite" parent="."]
-position = Vector2( -2.26474, -66.6479 )
+position = Vector2( -2.38419e-007, -63.7727 )
 scale = Vector2( 6.68, 6.68 )
 frames = SubResource( 1 )
 animation = "Jump_down"
 playing = true
+offset = Vector2( -0.339033, -0.430419 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 modulate = Color( 0.529412, 1, 0.835294, 1 )
@@ -86,6 +87,6 @@ position = Vector2( -0.152011, 0.71349 )
 rotation = 1.57192
 scale = Vector2( 0.525006, 0.525006 )
 texture = ExtResource( 9 )
-offset = Vector2( -0.938507, -131.441 )
+offset = Vector2( -0.939, -157.811 )
 [connection signal="area_entered" from="EnemyDetector" to="." method="_on_EnemyDetector_area_entered"]
 [connection signal="body_entered" from="EnemyDetector" to="." method="_on_EnemyDetector_body_entered"]
